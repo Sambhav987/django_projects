@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %} Categories {% endblock %}
+{% block body %}
+    <br>
+
+        <h2>Categories</h2>
+        <br><br>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 pb-2">
+
+                <ul>
+                    <a href="{% url 'category' 'fashion' %}">
+                        <li class="list-group-item">Fashion</li>
+                    </a>
+                    <br>
+
+                    <a href="{% url 'category' 'tools' %}">
+                        <li class="list-group-item">Tools</li>
+                    </a>
+                    <br>
+
+                    <a href="{% url 'category' 'toys' %}">
+                        <li class="list-group-item">Toys</li>
+                    </a>
+                    <br>
+
+                    <a href="{% url 'category' 'electronics' %}">
+                        <li class="list-group-item">Electronics</li>
+                    </a>
+                    <br>
+
+                    <a href="{% url 'category' 'accessories' %}">
+                        <li class="list-group-item">Accessories</li>
+                    </a>
+                    <br>
+
+                    <a href="{% url 'category' 'books' %}">
+                        <li class="list-group-item">Books</li>
+                    </a>
+                    <br>
+                </ul>
+
+            </div>
+        </div>
+
+{% endblock %}

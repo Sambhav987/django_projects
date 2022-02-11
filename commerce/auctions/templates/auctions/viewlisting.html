@@ -1,0 +1,183 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %} Listing page for {{ product.title }} {% endblock %}
+
+
+{% block body %}
+
+
+{% if closed %}
+
+{% if winner.winner == winner.owner %}
+    <div class="alert alert-success">Congratulations, you have won the auction for this Listing.</div>
+
+{% else %}
+    <div class="alert alert-danger">Auction for this Listing has been closed.</div>
+
+{% endif %}
+
+<h1>{{ product.title }}</h1>
+
+{% if product.image_link %}
+    <img src="{{ product.image_link }}" alt="indeximage" style="height: 350px;" class="embed-responsive">
+    <br>
+{% else %}
+    <p>No Image Available</p> <br><br><br>
+{% endif %} 
+
+
+    <h5>{{ product.description }}</h5>
+    <br><br>
+
+
+    <h3>{{ product.starting_bid }}$</h3>
+
+    <br><br>
+    <h5>Details:</h5>
+    <ul> 
+    <li>Category: {{ product.category }} </li>
+    <li>Listed By: {{ product.seller }} </li>
+    <li>Created on: {{ product.created_at }} </li>
+    </ul>
+
+    <br><br><br>
+
+
+        <h2 class="card-title h2">Comments</h2>
+
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{comment.comment}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <p> by {{ comment.user }} at {{ comment.timestamp }} </p>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+
+        {% else %}
+            <div>
+                <p>No Comments Found</p> 
+            </div>
+        {% endif %}
+        <br>
+
+
+</div>
+
+
+
+
+
+
+
+{% else %}
+
+{% if message %}
+        <div class="alert alert-{{ msg_type }}">{{ message }}</div>
+
+{% endif %}
+
+
+<h1>{{ product.title }}</h1>
+
+{% if not closed %}
+
+    {% if added %}
+        <a href="{% url 'addtowatchlist' product.id %}" class="btn btn-danger" name="remove">Remove from Watchlist</a>
+    {% else %}
+        <a href="{% url 'addtowatchlist' product.id %}" class="btn btn-primary" name="add">Add to Watchlist</a>
+    {% endif %}
+    <br> <br>
+    
+{% endif %}
+
+{% if product.image_link %}
+    <img src="{{ product.image_link }}" alt="indeximage" style="height: 350px;" class="embed-responsive">
+    <br>
+{% else %}
+    <p>No Image Available</p> <br><br><br>
+{% endif %} 
+
+
+    <h5>{{ product.description }}</h5>
+    <br><br>
+
+
+    <h3>{{ product.starting_bid }}$</h3>
+    <br>
+
+    {% if user.username == product.seller %}
+        <h6>Place your Bid: </h6>
+
+        <form action="{% url 'viewlisting' product.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" type="text" name="newbid" placeholder="Your Bid">
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Place Bid">
+        </form>
+        <br>
+    {% endif %}
+
+
+    <br><br>
+    <h5>Details:</h5>
+    <ul> 
+    <li>Category: {{ product.category }} </li>
+    <li>Listed By: {{ product.seller }} </li>
+    <li>Created on: {{ product.created_at }} </li>
+    </ul>
+
+    <br><br><br>
+
+
+        <h2 class="card-title h2">Comments</h2>
+
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{comment.comment}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <p> by {{ comment.user }} at {{ comment.timestamp }} </p>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+
+        {% else %}
+            <div>
+                <p>No Comments Found</p> 
+            </div>
+        {% endif %}
+        <br>
+
+
+            <h5>Add Comment</h5>
+            
+            <form action="{% url 'addcomment' product.id %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="comment" rows="4" placeholder="Enter Your Comment"></textarea>
+                </div>
+                <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+            </form>
+
+        <br><br><br>
+
+    
+
+    {% if user.username == product.seller %}
+        <a href="{% url 'closebid' product.id %}" class="btn btn-info btn-lg"> Close Bid </a>
+    {% endif %}
+
+</div>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+<div class="card mb-3">
+    <div class="row g-0">
+    <div class="col-md-8">
+    <div class="card-body">
+        <a href="{% url 'viewlisting' product.id %}">
+            <h3 class="card-title">{{product.title}}</h3>
+            </a>
+        <p class="card-text">{{product.description}} <br> </p>
+        <p class="font-weight-bold">{{product.starting_bid}}$ <br> </p>
+    </div>
+    </div>
+    
+    <div class="col-md-4">
+        {% if product.image_link %}
+        <img src="{{product.image_link}}" alt="Card image cap" style="height: 200px;">
+        {% else %}
+        <span class="card-text">No Image Available</span>
+        {% endif %}
+    </div>
+</div>
+<div class="card-footer text-muted text-center">
+    {{product.created_at}}
+</div>
+</div>

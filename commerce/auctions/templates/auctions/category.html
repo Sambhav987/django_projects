@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %} {{ category }} {% endblock %}
+
+{% block body %}
+<br>
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+
+        <h2 class="card-title h2">Listings for {{ category }}</h2>
+        <br><br>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 pb-2">
+                {% if empty %}
+                    <h4>No Active Listings Found<h4>
+
+                {% else %}
+                    
+                    {% for product in products %}
+
+                        <br>
+                        {% include "auctions/listingcard.html" %}
+
+                    {% endfor %}
+                    
+                {% endif %}
+            </div>
+        </div>
+
+{% endblock %}
